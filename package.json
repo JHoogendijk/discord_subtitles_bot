@@ -1,0 +1,19 @@
+{
+  "name": "discord_subtitles_bot",
+  "version": "1.0.0",
+  "description": "Bot that generates subtitles for voice channels",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/opus": "^0.3.2",
+    "@google-cloud/speech": "^4.1.2",
+    "discord.js": "^12.3.1",
+    "ffmpeg-static": "^4.2.7",
+    "ibm-watson": "^5.7.0",
+    "sodium": "^3.0.2"
+  }
+}

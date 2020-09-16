@@ -1,0 +1,7 @@
+{
+    "prefix": "!",
+    "token": "<your discord bot token>",
+    "iamApiKey": "<ibm auth key>",
+    "textToSpeechUrl": "<ibm textToSpeechUrl>",
+    "textToSpeechAuthType": "<ibm auth type>"
+}
