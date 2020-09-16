@@ -12,6 +12,11 @@ process.env.TEXT_TO_SPEECH_AUTH_TYPE = textToSpeechAuthType;
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
+const speechToText = new SpeechToTextV1({
+    authenticator: new IamAuthenticator({ apikey: iamApiKey }),
+    serviceUrl: textToSpeechUrl
+});
+
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
@@ -73,12 +78,6 @@ global.startStream = async function(user, connection, textChannel, language, voi
         // Start new stream async
         global.startStream(user, connection, textChannel, language, voiceChannel);
 
-        // Reads a local audio file and converts it to base64
-        const speechToText = new SpeechToTextV1({
-            authenticator: new IamAuthenticator({ apikey: iamApiKey }),
-            serviceUrl: textToSpeechUrl//'https://stream.watsonplatform.net/speech-to-text/api/'
-        });
-          
         const params = {
             audio: fs.createReadStream(fileName),
             contentType: 'audio/l16; rate=48000; channels=2',
