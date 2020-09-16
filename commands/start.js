@@ -20,7 +20,6 @@ module.exports = {
             message.reply('I\'m already sending subtitles to this text channel. Please use another text channel or stop the existing instance first!');
             return;
         }
-        var languageCode = 'en-us';
         if (args.length > 0) {
             languageCode = args[0];
         }
