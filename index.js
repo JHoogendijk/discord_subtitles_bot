@@ -54,8 +54,9 @@ client.on('message', message => {
 
 global.listeningTo = {}; // id: {text_channel, streams, connection}
 global.endStream = async function(userId, voiceChannel) {
-    stream = global.listeningTo[voiceChannel.id].stream[userId];
-
+    stream = global.listeningTo[voiceChannel.id].streams[userId];
+    stream.destroy();
+    delete global.listeningTo[voiceChannel.id].streams[userId];
 };
 global.userIds = {};
 global.startStream = async function(user, connection, textChannel, language, voiceChannel) {
@@ -151,22 +152,34 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
     let newUserChannel = newMember.channel;
     let oldUserChannel = oldMember.channel;
   
-    if(oldUserChannel === undefined && newUserChannel !== undefined) {
+    if(oldUserChannel === null && newUserChannel !== null) {
         // User Joins a voice channel
-        if (global.isListeningTo(newUserChannel)) {
+        if (global.isListeningTo(newUserChannel) && !newMember.member.user.bot) {
             // Start stream for user
-            user = newMember.user;
+            user = newMember.member.user;
             connection = global.listeningTo[newUserChannel.id].connection;
             textChannel = global.listeningTo[newUserChannel.id].textChannel;
             model = global.listeningTo[newUserChannel.id].model;
             global.startStream(user, connection, textChannel, model, newUserChannel);
         }
   
-    } else if(newUserChannel === undefined){
+    } else if(newUserChannel === null){
         // User leaves a voice channel
-        if (global.isListeningTo(newUserChannel)) {
-            user = oldMember.user;
+        if (global.isListeningTo(oldUserChannel) && !oldMember.member.user.bot) {
+            user = oldMember.member.user;
             global.endStream(user.id, oldUserChannel);
+            const remainingMembers = oldUserChannel.members.array();
+            for (var i = 0; i < remainingMembers.length; i++) {
+                var member = remainingMembers[i];
+                if (!member.user.bot) {
+                    i++
+                }
+                if (i > 1) {
+                    return;
+                }
+            }
+            global.listeningTo[oldUserChannel.id].textChannel.send('There are participants left! Stopped proving subtitles!');
+            global.stopListening(oldUserChannel.id);
         }
     }
   });
