@@ -168,12 +168,13 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
             user = oldMember.member.user;
             global.endStream(user.id, oldUserChannel);
             const remainingMembers = oldUserChannel.members.array();
+            var j = 0;
             for (var i = 0; i < remainingMembers.length; i++) {
                 var member = remainingMembers[i];
                 if (!member.user.bot) {
-                    i++
+                    j++
                 }
-                if (i > 1) {
+                if (j > 1) {
                     return;
                 }
             }
