@@ -102,3 +102,16 @@ dist
 
 # TernJS port file
 .tern-port
+
+# macOS files
+.DS_Store
+.localized
+
+# nodeJS package file lock
+package-lock.json
+
+# make sure credentials don't get uploaded!
+ibm-credentials.env
+config.json
+
+

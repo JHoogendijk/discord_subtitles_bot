@@ -9,11 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/opus": "^0.3.2",
+    "@discordjs/opus": "^0.3.3",
     "@google-cloud/speech": "^4.1.2",
-    "discord.js": "^12.3.1",
+    "audiobuffer-to-wav": "^1.0.0",
+    "discord.js": "^12.5.1",
     "ffmpeg-static": "^4.2.7",
-    "ibm-watson": "^5.7.0",
-    "sodium": "^3.0.2"
+    "ibm-watson": "^6.0.2",
+    "opusscript": "^0.0.7",
+    "sodium": "^3.0.2",
+    "web-audio-api": "^0.2.2"
   }
 }
